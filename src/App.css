@@ -1,0 +1,12 @@
+.App {
+  background: var(--color-black);
+  min-height: 100vh;
+  justify-content: center;
+  align-items: start;
+  gap: 1rem;
+  color:azure;
+}
+
+body {
+  margin: 0;
+}
