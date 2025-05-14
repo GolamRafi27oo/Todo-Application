@@ -1,4 +1,5 @@
 import "./App.css";
+import Bar from "./components/Bar";
 import Todo from "./components/Todo";
 
 function App() {
@@ -9,9 +10,8 @@ function App() {
         <ShowCounter />
         <ShowCounterTwo /> */}
         <Todo />
-
+        {/* <Bar/> */}
         {/* <GlassTerminal/> */}
-
       </div>
     </>
   );

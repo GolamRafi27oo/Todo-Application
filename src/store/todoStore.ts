@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 
 type TodoItem = {
   title: string;
@@ -27,71 +27,73 @@ type TodoActions = {
 };
 
 export const useTodoStore = create<TodoState & TodoActions>()(
-  persist(
-    (set, get) => ({
-      titleInput: "",
-      descriptionInput: "",
-      createTime: "",
-      todos: [],
+  devtools(
+    persist(
+      (set, get) => ({
+        titleInput: "",
+        descriptionInput: "",
+        createTime: "",
+        todos: [],
 
-      clear: () =>
-        set(() => ({
-          titleInput: "",
-          descriptionInput: "",
-        })),
+        clear: () =>
+          set(() => ({
+            titleInput: "",
+            descriptionInput: "",
+          })),
 
-      setTitle: (value) => set(() => ({ titleInput: value })),
-      setDescription: (value) => set(() => ({ descriptionInput: value })),
-      setTime: (value) => set(() => ({ createTime: value })),
+        setTitle: (value) => set(() => ({ titleInput: value })),
+        setDescription: (value) => set(() => ({ descriptionInput: value })),
+        setTime: (value) => set(() => ({ createTime: value })),
 
-      add: () => {
-        const { titleInput, descriptionInput, todos } = get();
-        if (!titleInput && !descriptionInput) return;
+        add: () => {
+          const { titleInput, descriptionInput, todos } = get();
+          if (!titleInput && !descriptionInput) return;
 
-        set(() => ({
-          todos: [
-            ...todos,
-            {
-              title: titleInput,
-              description: descriptionInput,
-              done: false,
-              time: new Date().toISOString(),
-            },
-          ],
-          titleInput: "",
-          descriptionInput: "",
-        }));
-      },
+          set(() => ({
+            todos: [
+              ...todos,
+              {
+                title: titleInput,
+                description: descriptionInput,
+                done: false,
+                time: new Date().toISOString(),
+              },
+            ],
+            titleInput: "",
+            descriptionInput: "",
+          }));
+        },
 
-      dlt: (index) =>
-        set((state) => ({
-          todos: state.todos.filter((_, i) => i !== index),
-        })),
+        dlt: (index) =>
+          set((state) => ({
+            todos: state.todos.filter((_, i) => i !== index),
+          })),
 
-      edit: (index, newTitle, newDescription) =>
-        set((state) => {
-          const updatedTodos = [...state.todos];
-          if (!updatedTodos[index]) return state;
-          updatedTodos[index] = {
-            ...updatedTodos[index],
-            title: newTitle,
-            description: newDescription,
-          };
-          return { todos: updatedTodos };
-        }),
+        edit: (index, newTitle, newDescription) =>
+          set((state) => {
+            const updatedTodos = [...state.todos];
+            if (!updatedTodos[index]) return state;
+            updatedTodos[index] = {
+              ...updatedTodos[index],
+              title: newTitle,
+              description: newDescription,
+            };
+            return { todos: updatedTodos };
+          }),
 
-      toggleDone: (index) =>
-        set((state) => {
-          const todos = [...state.todos];
-          todos[index] = {
-            ...todos[index],
-            done: !todos[index].done,
-          };
-          return { todos };
-        }),
-    }),
-    {
-      name: "todo-storage",
-    }
+        toggleDone: (index) =>
+          set((state) => {
+            const todos = [...state.todos];
+            todos[index] = {
+              ...todos[index],
+              done: !todos[index].done,
+            };
+            return { todos };
+          }),
+      }),
+      {
+        name: "todo-storage",
+      }
+    )
   )
 );
