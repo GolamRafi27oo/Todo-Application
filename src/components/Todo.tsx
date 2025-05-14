@@ -1,5 +1,3 @@
-// components/Todo.tsx
-import { useState } from "react";
 import "../index.css";
 import { useTodoStore } from "../store/todoStore";
 import TodoList from "./TodoList";
@@ -13,8 +11,6 @@ export default function Todo() {
     setTime,
     setTitle,
   } = useTodoStore();
-
-  const [isShow, setShow] = useState(false);
 
   return (
     <div className="min-h-screen px-4 py-20 font-sans text-white bg-gray-950">
@@ -43,8 +39,8 @@ export default function Todo() {
           Add Todo
         </button>
       </div>
-      <button onClick={() => setShow(!isShow)}>show</button>
-      {isShow && <TodoList />}
+
+      <TodoList />
     </div>
   );
 }
