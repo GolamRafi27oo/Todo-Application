@@ -1,5 +1,4 @@
 import "./App.css";
-import Bar from "./components/Bar";
 import Todo from "./components/Todo";
 
 function App() {
